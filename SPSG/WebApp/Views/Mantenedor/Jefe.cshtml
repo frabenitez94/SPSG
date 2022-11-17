@@ -1,0 +1,153 @@
+﻿@using Entities;
+@{
+    ViewBag.Title = "Jefe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SP_GET_EMPLEADO_Result> empleados = (List<SP_GET_EMPLEADO_Result>)ViewData["Empleado"];
+}
+
+<h2>Jefe</h2>
+<div class="container body-content">
+    <div class="row">
+        <div class="col">
+            <form id="find" onkeydown="return event.key != 'Enter';" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Nombre" aria-label="Search" id="Nombre" name="Nombre">
+                <input class="form-control me-2" type="search" placeholder="Correo" aria-label="Search" id="Correo" name="Correo">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Clean(1)">Nuevo</button>
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="container">
+    <div id="list">
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Formulario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onclick="Clean()"></button>
+    </div>
+    <form id="save" onkeydown="return event.key != 'Enter';" class="d-flex">
+        <div class="offcanvas-body small">
+
+            <input style="display:none;" id="Id" name="Id" value="" />
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" placeholder="name@example.com" required>
+            </div>
+            <div class="mb-3">
+                <label for="Name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="Name" name="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="empleado" class="form-label">Empleado</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="Empleado" name="Empleado" multiple >
+                    @foreach (var item in empleados)
+                    {
+                        <option value="@item.semp_Id">@item.semp_Nombre</option>
+                    }
+
+                </select>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-outline-success" type="submit">Guardar</button>
+
+                <button class="btn btn-outline-danger" style="display:none;" type="button" id="btnDelete">Eliminar</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#find").submit(function (e) {
+            e.preventDefault();
+            Search(1);
+        });
+        $("#save").submit(function (e) {
+            e.preventDefault();
+            Save();
+        });
+    })
+
+    function Save() {
+         var e = $("#save");
+        parameters = e.serialize();
+        $.ajax({
+            url: '@Url.Content("~/Mantenedor/JefeGuardar")',
+            type: "POST",
+            data: parameters
+
+        }).done(function (resp) {
+            Clean();
+        });
+    }
+    function Edit(data) {
+        $('.active').removeClass('active');
+        $("#" + data.sjfe_Id).addClass('active');
+        $("#Id").val(data.sjfe_Id);
+        $("#Email").val(data.sjfe_Correo);
+        $("#Name").val(data.sjfe_Nombre);
+        const empleados = JSON.parse(data.jsonEmpleados);
+        const selected = new Array;
+        $("#Empleado").val("");
+        $.each(empleados, function (i, e) {
+            selected.push(e.semp_Id);
+        });
+
+        $("#Empleado").val(selected);
+        $("#btnDelete").click(function () { Delete(data.sjfe_Id); });
+        $("#btnDelete").show();
+    }
+    function Search(pagina) {
+        var e = $("#find");
+        parameters = e.serialize();
+        pagina == undefined ? 0 : pagina;
+        $.ajax({
+            url: '@Url.Content("~/Mantenedor/JefeLista")',
+            type: "POST",
+            data: parameters + "&pagina=" + pagina
+
+        }).done(function (resp) {
+            $("#list").html(resp);
+        });
+    }
+    function Delete(id) {
+        $.ajax({
+            url: '@Url.Content("~/Mantenedor/JefeEliminar")',
+            type: "POST",
+            data: "id=" + id
+
+        }).done(function (resp) {
+            Clean();
+        });
+    }
+    function Clean(Nuevo) {
+        $("#Id").val("");
+        $("#Email").val("");
+        $("#Name").val("");
+        $("#Empleado").val("")
+        $("#btnDelete").hide();
+        Search(1);
+        if (Nuevo == undefined) {
+            $("#offcanvasBottom").offcanvas('hide');
+        }
+
+    }
+</script>
+
+
+
+
+
+
+
