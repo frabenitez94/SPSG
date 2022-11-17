@@ -48,6 +48,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="SP_DELETE_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="semp_Id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_DELETE_JEFE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="sjfe_Id" Type="int" Mode="In" />
+  </Function>
   <Function Name="SP_GET_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Nombre" Type="varchar" Mode="In" />
     <Parameter Name="Correo" Type="varchar" Mode="In" />

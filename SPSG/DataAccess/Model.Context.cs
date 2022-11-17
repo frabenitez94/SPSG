@@ -18,7 +18,7 @@ namespace DataAccess
     
     public partial class SPSGEntities : DbContext
     {
-        public SPSGEntities(string strConnection)
+        public SPSGEntities()
             : base("name=SPSGEntities")
         {
         }
@@ -31,6 +31,24 @@ namespace DataAccess
         public virtual DbSet<SPSG_Empleado> SPSG_Empleado { get; set; }
         public virtual DbSet<SPSG_Empleado_Jefe> SPSG_Empleado_Jefe { get; set; }
         public virtual DbSet<SPSG_Jefe> SPSG_Jefe { get; set; }
+    
+        public virtual ObjectResult<Nullable<int>> SP_DELETE_EMPLEADO(Nullable<int> semp_Id)
+        {
+            var semp_IdParameter = semp_Id.HasValue ?
+                new ObjectParameter("semp_Id", semp_Id) :
+                new ObjectParameter("semp_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_DELETE_EMPLEADO", semp_IdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_DELETE_JEFE(Nullable<int> sjfe_Id)
+        {
+            var sjfe_IdParameter = sjfe_Id.HasValue ?
+                new ObjectParameter("sjfe_Id", sjfe_Id) :
+                new ObjectParameter("sjfe_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_DELETE_JEFE", sjfe_IdParameter);
+        }
     
         public virtual ObjectResult<SP_GET_EMPLEADO_Result> SP_GET_EMPLEADO(string nombre, string correo, Nullable<int> pagina, Nullable<int> filas)
         {

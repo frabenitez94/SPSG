@@ -4,8 +4,11 @@ Alter Procedure SP_GET_JEFE
 	@Correo varchar(50),
 	@pagina int,
 	@filas int)
-as 
+as
+
 begin 
+
+
 
 SET NOCOUNT ON;
 
@@ -34,5 +37,8 @@ from [dbo].[SPSG_Jefe]
 where [sjfe_Nombre] like '%' +  isnull(@Nombre,'') +'%' 
 	  and 
 	  [sjfe_Correo] like '%' +  isnull(@Correo,'') +'%' 
-
+	  ORDER BY sjfe_Id 
+DESC
+				OFFSET (@pagina - 1) * @filas ROWS
+								FETCH NEXT @filas ROWS only;
 end

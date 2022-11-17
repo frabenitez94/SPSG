@@ -4,7 +4,7 @@
     <div class="list-group">
         @foreach (var item in Model)
         {
-            <button type="button" id="@item.sjfe_Id" class="list-group-item list-group-item-action " aria-current="true" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Edit(@item.sjfe_Id,@(Newtonsoft.Json.JsonConvert.SerializeObject(item, Newtonsoft.Json.Formatting.Indented)))">
+            <button type="button" id="@item.sjfe_Id" class="list-group-item list-group-item-action " aria-current="true" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Edit(@(Newtonsoft.Json.JsonConvert.SerializeObject(item, Newtonsoft.Json.Formatting.Indented)))">
                 @item.sjfe_Nombre - @item.sjfe_Correo
             </button>
         }

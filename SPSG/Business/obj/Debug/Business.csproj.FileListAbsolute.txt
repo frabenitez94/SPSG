@@ -1,3 +1,5 @@
+D:\SPSG\SPSG\Business\obj\Debug\Business.csproj.AssemblyReference.cache
+D:\SPSG\SPSG\Business\obj\Debug\Business.csproj.CoreCompileInputs.cache
 D:\SPSG\SPSG\Business\bin\Debug\Business.dll.config
 D:\SPSG\SPSG\Business\bin\Debug\Business.dll
 D:\SPSG\SPSG\Business\bin\Debug\Business.pdb
@@ -5,13 +7,13 @@ D:\SPSG\SPSG\Business\bin\Debug\DataAccess.dll
 D:\SPSG\SPSG\Business\bin\Debug\Entities.dll
 D:\SPSG\SPSG\Business\bin\Debug\EntityFramework.dll
 D:\SPSG\SPSG\Business\bin\Debug\EntityFramework.SqlServer.dll
+D:\SPSG\SPSG\Business\bin\Debug\Newtonsoft.Json.dll
 D:\SPSG\SPSG\Business\bin\Debug\DataAccess.pdb
 D:\SPSG\SPSG\Business\bin\Debug\DataAccess.dll.config
 D:\SPSG\SPSG\Business\bin\Debug\Entities.pdb
 D:\SPSG\SPSG\Business\bin\Debug\EntityFramework.xml
 D:\SPSG\SPSG\Business\bin\Debug\EntityFramework.SqlServer.xml
-D:\SPSG\SPSG\Business\obj\Debug\Business.csproj.AssemblyReference.cache
-D:\SPSG\SPSG\Business\obj\Debug\Business.csproj.CoreCompileInputs.cache
+D:\SPSG\SPSG\Business\bin\Debug\Newtonsoft.Json.xml
 D:\SPSG\SPSG\Business\obj\Debug\Business.csproj.CopyComplete
 D:\SPSG\SPSG\Business\obj\Debug\Business.dll
 D:\SPSG\SPSG\Business\obj\Debug\Business.pdb

@@ -1,7 +1,9 @@
-﻿
+﻿@using Entities;
 @{
     ViewBag.Title = "Empleado";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SP_GET_JEFE_Result> jefes = (List<SP_GET_JEFE_Result>)ViewData["Jefe"];
 }
 
 <h2>Empleado</h2>
@@ -9,13 +11,13 @@
     <div class="row">
         <div class="col">
             <form id="find" onkeydown="return event.key != 'Enter';" class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Nombre" aria-label="Search">
-                <input class="form-control me-2" type="search" placeholder="Correo" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Nombre" aria-label="Search" id="Nombre" name="Nombre">
+                <input class="form-control me-2" type="search" placeholder="Correo" aria-label="Search" id="Correo" name="Correo">
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
         </div>
         <div class="col">
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Nuevo</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Clean(1)">Nuevo</button>
         </div>
     </div>
 </div>
@@ -25,27 +27,38 @@
     <div id="list">
     </div>
 </div>
-<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasBottomLabel">Formulario</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onclick="Clean()"></button>
     </div>
-    <div class="offcanvas-body small">
-        <form id="save" onkeydown="return event.key != 'Enter';" class="d-flex" role="search">
-            <input hidden id="Id" name="Id" value="" />
+    <form id="save" onkeydown="return event.key != 'Enter';" class="d-flex" role="search">
+        <div class="offcanvas-body small">
+            <input style="display:none;" id="Id" name="Id" value="" />
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                <label for="Email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" placeholder="name@example.com" required>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="Name" name="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="Jefe" class="form-label">Empleado</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="Jefe" name="Jefe" multiple>
+                    @foreach (var item in jefes)
+                    {
+                        <option value="@item.sjfe_Id">@item.sjfe_Nombre</option>
+                    }
+                </select>
             </div>
             <div class="mb-3">
                 <button class="btn btn-outline-success" type="submit">Guardar</button>
+                <button class="btn btn-outline-danger" type="button" style="display:none;" id="btnDelete">Eliminar</button>
             </div>
-        </form>
-    </div>
+
+        </div>
+    </form>
 </div>
 
 
@@ -57,26 +70,41 @@
         $("#find").submit(function (e) {
             e.preventDefault();
             Search(1);
+        });$("#save").submit(function (e) {
+            e.preventDefault();
+            Save();
         });
     })
 
     function Save() {
-        var e = $("#find");
+        var e = $("#save");
         parameters = e.serialize();
-        pagina == undefined ? 0 : pagina;
         $.ajax({
             url: '@Url.Content("~/Mantenedor/EmpleadoGuardar")',
             type: "POST",
             data: parameters
 
         }).done(function (resp) {
-            
+            Clean();
         });
     }
-    function Edit(id, data) {
-        $("#" + id).addClass('active');
-        $("#email").val(data.semp_Correo);
-        $("#name").val(data.semp_Nombre);
+    function Edit(data) {
+        $('.active').removeClass('active');
+        $("#" + data.semp_Id).addClass('active');
+        $("#Id").val(data.semp_Id);
+        $("#Email").val(data.semp_Correo);
+        $("#Name").val(data.semp_Nombre);
+        const jefes = JSON.parse(data.jsonJefes);
+        const selected = new Array;
+        $("#Jefe").val("");
+        $.each(jefes, function (i, e) {
+            selected.push(e.sjfe_Id);
+        });
+        $("#Jefe").val(selected);
+
+        $("#btnDelete").click(function () { Delete(data.semp_Id); });
+        $("#btnDelete").show();
+
     }
     function Search(pagina) {
         var e = $("#find");
@@ -92,7 +120,25 @@
         });
     }
     function Delete(id) {
+        $.ajax({
+            url: '@Url.Content("~/Mantenedor/EmpleadoEliminar")',
+            type: "POST",
+            data: "id=" + id
 
+        }).done(function (resp) {
+            Clean();
+        });
+    }
+    function Clean(Nuevo) {
+        $("#Id").val("");
+        $("#Email").val("");
+        $("#Name").val("");
+        $("#Jefe").val("")
+        $("#btnDelete").hide();
+        Search(1);
+        if (!Nuevo == undefined) {
+            $("#offcanvasBottom").offcanvas('hide');
+        }
     }
 
 </script>

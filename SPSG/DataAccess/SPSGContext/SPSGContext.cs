@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Context
+namespace DataAccess.SPSGContext
 {
-    public class Context : SPSGEntities
+    public class SPSGContext : SPSGEntities
     {
         private static readonly String strConnection = "name=SPSGEntities";
-        public Context() : base(strConnection)
+        public SPSGContext() 
         {
             base.Configuration.LazyLoadingEnabled = false;
         }

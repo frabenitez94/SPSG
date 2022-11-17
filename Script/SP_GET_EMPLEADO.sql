@@ -34,6 +34,9 @@ from [dbo].[SPSG_Empleado]
 where [semp_Nombre] like '%' +  isnull(@Nombre,'') +'%' 
 	  and 
 	  [semp_Correo] like '%' +  isnull(@Correo,'') +'%' 
+ORDER BY semp_Id DESC
+				OFFSET (@pagina - 1) * @filas ROWS
+								FETCH NEXT @filas ROWS only;
 
 end
 

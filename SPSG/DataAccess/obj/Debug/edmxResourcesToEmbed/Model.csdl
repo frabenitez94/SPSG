@@ -64,6 +64,12 @@
       <End Role="SPSG_Jefe" EntitySet="SPSG_Jefe" />
       <End Role="SPSG_Empleado_Jefe" EntitySet="SPSG_Empleado_Jefe" />
     </AssociationSet>
+    <FunctionImport Name="SP_DELETE_EMPLEADO" ReturnType="Collection(Int32)">
+      <Parameter Name="semp_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_DELETE_JEFE" ReturnType="Collection(Int32)">
+      <Parameter Name="sjfe_Id" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="SP_GET_EMPLEADO" ReturnType="Collection(SPSGModel.SP_GET_EMPLEADO_Result)">
       <Parameter Name="Nombre" Mode="In" Type="String" />
       <Parameter Name="Correo" Mode="In" Type="String" />

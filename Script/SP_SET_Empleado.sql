@@ -1,4 +1,4 @@
-Create Procedure SP_SET_EMPLEADO
+ALTER Procedure SP_SET_EMPLEADO
 	@semp_Id int, 
 	@Nombre varchar(50),
 	@Correo varchar(50), 
@@ -9,7 +9,7 @@ declare
 	@idNewAux int,
 	@cantJefe int;
 
-
+	
 --set @json_sjfe_Id  = N'[
 --  {"sjfe_Id": 2},
 --  {"sjfe_Id": 5}
@@ -56,7 +56,7 @@ begin
 
 
 				insert into [dbo].[SPSG_Empleado_Jefe] ([emp_jf_sjfe_Id],[emp_jf_semp_Id])
-					(SELECT sjfe_Id, @idNewAux
+					(SELECT sjfe_Id, @semp_Id
 						FROM OPENJSON(@json_sjfe_Id)
 						WITH (
 								sjfe_Id INT 'strict $.sjfe_Id'
