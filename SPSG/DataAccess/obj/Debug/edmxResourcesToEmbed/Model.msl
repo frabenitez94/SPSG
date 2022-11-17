@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SPSGModelStoreContainer" CdmEntityContainer="SPSGEntities">
+    <EntitySetMapping Name="SPSG_Empleado">
+      <EntityTypeMapping TypeName="SPSGModel.SPSG_Empleado">
+        <MappingFragment StoreEntitySet="SPSG_Empleado">
+          <ScalarProperty Name="semp_Id" ColumnName="semp_Id" />
+          <ScalarProperty Name="semp_Nombre" ColumnName="semp_Nombre" />
+          <ScalarProperty Name="semp_Correo" ColumnName="semp_Correo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SPSG_Empleado_Jefe">
+      <EntityTypeMapping TypeName="SPSGModel.SPSG_Empleado_Jefe">
+        <MappingFragment StoreEntitySet="SPSG_Empleado_Jefe">
+          <ScalarProperty Name="emp_jf_Id" ColumnName="emp_jf_Id" />
+          <ScalarProperty Name="emp_jf_sjfe_Id" ColumnName="emp_jf_sjfe_Id" />
+          <ScalarProperty Name="emp_jf_semp_Id" ColumnName="emp_jf_semp_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SPSG_Jefe">
+      <EntityTypeMapping TypeName="SPSGModel.SPSG_Jefe">
+        <MappingFragment StoreEntitySet="SPSG_Jefe">
+          <ScalarProperty Name="sjfe_Id" ColumnName="sjfe_Id" />
+          <ScalarProperty Name="sjfe_Nombre" ColumnName="sjfe_Nombre" />
+          <ScalarProperty Name="sjfe_Correo" ColumnName="sjfe_Correo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_GET_EMPLEADO" FunctionName="SPSGModel.Store.SP_GET_EMPLEADO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SPSGModel.SP_GET_EMPLEADO_Result">
+          <ScalarProperty Name="CantRegistros" ColumnName="CantRegistros" />
+          <ScalarProperty Name="semp_Id" ColumnName="semp_Id" />
+          <ScalarProperty Name="semp_Nombre" ColumnName="semp_Nombre" />
+          <ScalarProperty Name="semp_Correo" ColumnName="semp_Correo" />
+          <ScalarProperty Name="jsonJefes" ColumnName="jsonJefes" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GET_JEFE" FunctionName="SPSGModel.Store.SP_GET_JEFE">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SPSGModel.SP_GET_JEFE_Result">
+          <ScalarProperty Name="CantRegistros" ColumnName="CantRegistros" />
+          <ScalarProperty Name="sjfe_Id" ColumnName="sjfe_Id" />
+          <ScalarProperty Name="sjfe_Nombre" ColumnName="sjfe_Nombre" />
+          <ScalarProperty Name="sjfe_Correo" ColumnName="sjfe_Correo" />
+          <ScalarProperty Name="jsonEmpleados" ColumnName="jsonEmpleados" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_SET_EMPLEADO" FunctionName="SPSGModel.Store.SP_SET_EMPLEADO" />
+    <FunctionImportMapping FunctionImportName="SP_SET_JEFE" FunctionName="SPSGModel.Store.SP_SET_JEFE" />
+  </EntityContainerMapping>
+</Mapping>

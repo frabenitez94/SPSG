@@ -1,0 +1,14 @@
+D:\SPSG\SPSG\DataAccess\bin\Debug\DataAccess.dll.config
+D:\SPSG\SPSG\DataAccess\bin\Debug\DataAccess.dll
+D:\SPSG\SPSG\DataAccess\bin\Debug\DataAccess.pdb
+D:\SPSG\SPSG\DataAccess\bin\Debug\Entities.dll
+D:\SPSG\SPSG\DataAccess\bin\Debug\EntityFramework.dll
+D:\SPSG\SPSG\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+D:\SPSG\SPSG\DataAccess\bin\Debug\Entities.pdb
+D:\SPSG\SPSG\DataAccess\bin\Debug\EntityFramework.xml
+D:\SPSG\SPSG\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\SPSG\SPSG\DataAccess\obj\Debug\DataAccess.csproj.AssemblyReference.cache
+D:\SPSG\SPSG\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
+D:\SPSG\SPSG\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
+D:\SPSG\SPSG\DataAccess\obj\Debug\DataAccess.dll
+D:\SPSG\SPSG\DataAccess\obj\Debug\DataAccess.pdb

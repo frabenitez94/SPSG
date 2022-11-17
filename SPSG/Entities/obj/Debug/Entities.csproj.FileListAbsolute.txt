@@ -1,0 +1,6 @@
+D:\SPSG\SPSG\Entities\bin\Debug\Entities.dll
+D:\SPSG\SPSG\Entities\bin\Debug\Entities.pdb
+D:\SPSG\SPSG\Entities\obj\Debug\Entities.csproj.AssemblyReference.cache
+D:\SPSG\SPSG\Entities\obj\Debug\Entities.csproj.CoreCompileInputs.cache
+D:\SPSG\SPSG\Entities\obj\Debug\Entities.dll
+D:\SPSG\SPSG\Entities\obj\Debug\Entities.pdb

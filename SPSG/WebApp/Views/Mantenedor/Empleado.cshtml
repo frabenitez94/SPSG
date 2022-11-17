@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Empleado</h2>
+<div class="container body-content">
+    <div class="row">
+        <div class="col">
+            <form id="find" onkeydown="return event.key != 'Enter';" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Nombre" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Correo" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Nuevo</button>
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="container">
+    <div id="list">
+    </div>
+</div>
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Formulario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body small">
+        <form id="save" onkeydown="return event.key != 'Enter';" class="d-flex" role="search">
+            <input hidden id="Id" name="Id" value="" />
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-outline-success" type="submit">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#find").submit(function (e) {
+            e.preventDefault();
+            Search(1);
+        });
+    })
+
+    function Save() {
+        var e = $("#find");
+        parameters = e.serialize();
+        pagina == undefined ? 0 : pagina;
+        $.ajax({
+            url: '@Url.Content("~/Mantenedor/EmpleadoGuardar")',
+            type: "POST",
+            data: parameters
+
+        }).done(function (resp) {
+            
+        });
+    }
+    function Edit(id, data) {
+        $("#" + id).addClass('active');
+        $("#email").val(data.semp_Correo);
+        $("#name").val(data.semp_Nombre);
+    }
+    function Search(pagina) {
+        var e = $("#find");
+        parameters = e.serialize();
+        pagina == undefined ? 0 : pagina;
+        $.ajax({
+            url: '@Url.Content("~/Mantenedor/EmpleadoLista")',
+            type: "POST",
+            data: parameters + "&pagina=" + pagina
+
+        }).done(function (resp) {
+            $("#list").html(resp);
+        });
+    }
+    function Delete(id) {
+
+    }
+
+</script>
+
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+﻿@{
+    int paginaActual = (int)ViewData["PaginaActual"];
+    int cantidadPaginas = (int)ViewData["CantidadPaginas"];
+    String onclick = (String)ViewData["Onclick"];
+    int delta = 1;
+    int inicio = (paginaActual - delta > 1) ? paginaActual - delta : 1;
+    int termino = (paginaActual + delta < cantidadPaginas) ? paginaActual + delta : cantidadPaginas;
+}
+
+
+<nav aria-label="...">
+    <ul class="pagination">
+
+
+        @if (paginaActual != 1)
+        {
+            <li class="page-item">
+                <a class="page-link" onclick="@(onclick)(1)">Primera</a>
+            </li>
+        }
+
+
+
+        @if (paginaActual - delta >= 1)
+        {
+            inicio = paginaActual - delta;
+            <li class="page-item">
+                <a onclick="@(onclick)(@(paginaActual-1))" class="page-link" tabindex="-1">Anterior </a>
+            </li>
+        }
+
+
+        @for (int i = inicio; i <= termino; i++)
+        {
+            String divAtrrs = (paginaActual == i) ? "active" : "";
+            String evento = (paginaActual == i) ? "" : ("onclick=" + onclick + "(" + i + ")");
+            <li class="page-item @divAtrrs"><a class="page-link" @evento>@i</a></li>
+        }
+
+
+
+
+        @if (paginaActual + delta <= cantidadPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" onclick="@(onclick)(@(paginaActual+1))">Siguiente</a>
+            </li>
+        }
+
+        @if (cantidadPaginas >= 3 && paginaActual != cantidadPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" onclick="@(onclick)(@(cantidadPaginas))">Última</a>
+            </li>
+        }
+
+
+    </ul>
+</nav>

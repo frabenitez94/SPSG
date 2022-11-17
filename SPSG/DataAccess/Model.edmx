@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SPSGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SPSG_Empleado">
+          <Key>
+            <PropertyRef Name="semp_Id" />
+          </Key>
+          <Property Name="semp_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="semp_Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="semp_Correo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SPSG_Empleado_Jefe">
+          <Key>
+            <PropertyRef Name="emp_jf_Id" />
+          </Key>
+          <Property Name="emp_jf_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emp_jf_sjfe_Id" Type="int" Nullable="false" />
+          <Property Name="emp_jf_semp_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SPSG_Jefe">
+          <Key>
+            <PropertyRef Name="sjfe_Id" />
+          </Key>
+          <Property Name="sjfe_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sjfe_Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sjfe_Correo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SPSG_Empleado_Jefe_SPSG_Empleado">
+          <End Role="SPSG_Empleado" Type="Self.SPSG_Empleado" Multiplicity="1" />
+          <End Role="SPSG_Empleado_Jefe" Type="Self.SPSG_Empleado_Jefe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPSG_Empleado">
+              <PropertyRef Name="semp_Id" />
+            </Principal>
+            <Dependent Role="SPSG_Empleado_Jefe">
+              <PropertyRef Name="emp_jf_semp_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPSG_Empleado_Jefe_SPSG_Jefe">
+          <End Role="SPSG_Jefe" Type="Self.SPSG_Jefe" Multiplicity="1" />
+          <End Role="SPSG_Empleado_Jefe" Type="Self.SPSG_Empleado_Jefe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPSG_Jefe">
+              <PropertyRef Name="sjfe_Id" />
+            </Principal>
+            <Dependent Role="SPSG_Empleado_Jefe">
+              <PropertyRef Name="emp_jf_sjfe_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_GET_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="pagina" Type="int" Mode="In" />
+          <Parameter Name="filas" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_GET_JEFE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="pagina" Type="int" Mode="In" />
+          <Parameter Name="filas" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SET_EMPLEADO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="semp_Id" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="json_sjfe_Id" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_SET_JEFE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sjfe_Id" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="json_semp_Id" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="SPSGModelStoreContainer">
+          <EntitySet Name="SPSG_Empleado" EntityType="Self.SPSG_Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SPSG_Empleado_Jefe" EntityType="Self.SPSG_Empleado_Jefe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SPSG_Jefe" EntityType="Self.SPSG_Jefe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SPSG_Empleado_Jefe_SPSG_Empleado" Association="Self.FK_SPSG_Empleado_Jefe_SPSG_Empleado">
+            <End Role="SPSG_Empleado" EntitySet="SPSG_Empleado" />
+            <End Role="SPSG_Empleado_Jefe" EntitySet="SPSG_Empleado_Jefe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPSG_Empleado_Jefe_SPSG_Jefe" Association="Self.FK_SPSG_Empleado_Jefe_SPSG_Jefe">
+            <End Role="SPSG_Jefe" EntitySet="SPSG_Jefe" />
+            <End Role="SPSG_Empleado_Jefe" EntitySet="SPSG_Empleado_Jefe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SPSGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="SPSG_Empleado">
+          <Key>
+            <PropertyRef Name="semp_Id" />
+          </Key>
+          <Property Name="semp_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="semp_Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="semp_Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SPSG_Empleado_Jefe" Relationship="Self.FK_SPSG_Empleado_Jefe_SPSG_Empleado" FromRole="SPSG_Empleado" ToRole="SPSG_Empleado_Jefe" />
+        </EntityType>
+        <EntityType Name="SPSG_Empleado_Jefe">
+          <Key>
+            <PropertyRef Name="emp_jf_Id" />
+          </Key>
+          <Property Name="emp_jf_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emp_jf_sjfe_Id" Type="Int32" Nullable="false" />
+          <Property Name="emp_jf_semp_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SPSG_Empleado" Relationship="Self.FK_SPSG_Empleado_Jefe_SPSG_Empleado" FromRole="SPSG_Empleado_Jefe" ToRole="SPSG_Empleado" />
+          <NavigationProperty Name="SPSG_Jefe" Relationship="Self.FK_SPSG_Empleado_Jefe_SPSG_Jefe" FromRole="SPSG_Empleado_Jefe" ToRole="SPSG_Jefe" />
+        </EntityType>
+        <EntityType Name="SPSG_Jefe">
+          <Key>
+            <PropertyRef Name="sjfe_Id" />
+          </Key>
+          <Property Name="sjfe_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sjfe_Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sjfe_Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SPSG_Empleado_Jefe" Relationship="Self.FK_SPSG_Empleado_Jefe_SPSG_Jefe" FromRole="SPSG_Jefe" ToRole="SPSG_Empleado_Jefe" />
+        </EntityType>
+        <Association Name="FK_SPSG_Empleado_Jefe_SPSG_Empleado">
+          <End Role="SPSG_Empleado" Type="Self.SPSG_Empleado" Multiplicity="1" />
+          <End Role="SPSG_Empleado_Jefe" Type="Self.SPSG_Empleado_Jefe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPSG_Empleado">
+              <PropertyRef Name="semp_Id" />
+            </Principal>
+            <Dependent Role="SPSG_Empleado_Jefe">
+              <PropertyRef Name="emp_jf_semp_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SPSG_Empleado_Jefe_SPSG_Jefe">
+          <End Role="SPSG_Jefe" Type="Self.SPSG_Jefe" Multiplicity="1" />
+          <End Role="SPSG_Empleado_Jefe" Type="Self.SPSG_Empleado_Jefe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPSG_Jefe">
+              <PropertyRef Name="sjfe_Id" />
+            </Principal>
+            <Dependent Role="SPSG_Empleado_Jefe">
+              <PropertyRef Name="emp_jf_sjfe_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SPSGEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SPSG_Empleado" EntityType="Self.SPSG_Empleado" />
+          <EntitySet Name="SPSG_Empleado_Jefe" EntityType="Self.SPSG_Empleado_Jefe" />
+          <EntitySet Name="SPSG_Jefe" EntityType="Self.SPSG_Jefe" />
+          <AssociationSet Name="FK_SPSG_Empleado_Jefe_SPSG_Empleado" Association="Self.FK_SPSG_Empleado_Jefe_SPSG_Empleado">
+            <End Role="SPSG_Empleado" EntitySet="SPSG_Empleado" />
+            <End Role="SPSG_Empleado_Jefe" EntitySet="SPSG_Empleado_Jefe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SPSG_Empleado_Jefe_SPSG_Jefe" Association="Self.FK_SPSG_Empleado_Jefe_SPSG_Jefe">
+            <End Role="SPSG_Jefe" EntitySet="SPSG_Jefe" />
+            <End Role="SPSG_Empleado_Jefe" EntitySet="SPSG_Empleado_Jefe" />
+          </AssociationSet>
+          <FunctionImport Name="SP_GET_EMPLEADO" ReturnType="Collection(SPSGModel.SP_GET_EMPLEADO_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="pagina" Mode="In" Type="Int32" />
+            <Parameter Name="filas" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_JEFE" ReturnType="Collection(SPSGModel.SP_GET_JEFE_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="pagina" Mode="In" Type="Int32" />
+            <Parameter Name="filas" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SET_EMPLEADO" ReturnType="Collection(Int32)">
+            <Parameter Name="semp_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="json_sjfe_Id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SET_JEFE" ReturnType="Collection(Int32)">
+            <Parameter Name="sjfe_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="json_semp_Id" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_GET_EMPLEADO_Result">
+          <Property Type="Int32" Name="CantRegistros" Nullable="true" />
+          <Property Type="Int32" Name="semp_Id" Nullable="false" />
+          <Property Type="String" Name="semp_Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="semp_Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="jsonJefes" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_GET_JEFE_Result">
+          <Property Type="Int32" Name="CantRegistros" Nullable="true" />
+          <Property Type="Int32" Name="sjfe_Id" Nullable="false" />
+          <Property Type="String" Name="sjfe_Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sjfe_Correo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="jsonEmpleados" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SPSGModelStoreContainer" CdmEntityContainer="SPSGEntities">
+          <EntitySetMapping Name="SPSG_Empleado">
+            <EntityTypeMapping TypeName="SPSGModel.SPSG_Empleado">
+              <MappingFragment StoreEntitySet="SPSG_Empleado">
+                <ScalarProperty Name="semp_Id" ColumnName="semp_Id" />
+                <ScalarProperty Name="semp_Nombre" ColumnName="semp_Nombre" />
+                <ScalarProperty Name="semp_Correo" ColumnName="semp_Correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPSG_Empleado_Jefe">
+            <EntityTypeMapping TypeName="SPSGModel.SPSG_Empleado_Jefe">
+              <MappingFragment StoreEntitySet="SPSG_Empleado_Jefe">
+                <ScalarProperty Name="emp_jf_Id" ColumnName="emp_jf_Id" />
+                <ScalarProperty Name="emp_jf_sjfe_Id" ColumnName="emp_jf_sjfe_Id" />
+                <ScalarProperty Name="emp_jf_semp_Id" ColumnName="emp_jf_semp_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPSG_Jefe">
+            <EntityTypeMapping TypeName="SPSGModel.SPSG_Jefe">
+              <MappingFragment StoreEntitySet="SPSG_Jefe">
+                <ScalarProperty Name="sjfe_Id" ColumnName="sjfe_Id" />
+                <ScalarProperty Name="sjfe_Nombre" ColumnName="sjfe_Nombre" />
+                <ScalarProperty Name="sjfe_Correo" ColumnName="sjfe_Correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_EMPLEADO" FunctionName="SPSGModel.Store.SP_GET_EMPLEADO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SPSGModel.SP_GET_EMPLEADO_Result">
+                <ScalarProperty Name="CantRegistros" ColumnName="CantRegistros" />
+                <ScalarProperty Name="semp_Id" ColumnName="semp_Id" />
+                <ScalarProperty Name="semp_Nombre" ColumnName="semp_Nombre" />
+                <ScalarProperty Name="semp_Correo" ColumnName="semp_Correo" />
+                <ScalarProperty Name="jsonJefes" ColumnName="jsonJefes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_JEFE" FunctionName="SPSGModel.Store.SP_GET_JEFE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SPSGModel.SP_GET_JEFE_Result">
+                <ScalarProperty Name="CantRegistros" ColumnName="CantRegistros" />
+                <ScalarProperty Name="sjfe_Id" ColumnName="sjfe_Id" />
+                <ScalarProperty Name="sjfe_Nombre" ColumnName="sjfe_Nombre" />
+                <ScalarProperty Name="sjfe_Correo" ColumnName="sjfe_Correo" />
+                <ScalarProperty Name="jsonEmpleados" ColumnName="jsonEmpleados" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SET_EMPLEADO" FunctionName="SPSGModel.Store.SP_SET_EMPLEADO" />
+          <FunctionImportMapping FunctionImportName="SP_SET_JEFE" FunctionName="SPSGModel.Store.SP_SET_JEFE" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

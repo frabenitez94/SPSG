@@ -1,0 +1,22 @@
+﻿@using Entities;
+@model List<SP_GET_JEFE_Result>
+@{
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            <button type="button" id="@item.sjfe_Id" class="list-group-item list-group-item-action " aria-current="true" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="Edit(@item.sjfe_Id,@(Newtonsoft.Json.JsonConvert.SerializeObject(item, Newtonsoft.Json.Formatting.Indented)))">
+                @item.sjfe_Nombre - @item.sjfe_Correo
+            </button>
+        }
+
+    </div>
+}
+<br />
+@{
+    RouteValueDictionary dic = new RouteValueDictionary();
+    dic.Add("paginaActual", (int)ViewData["PaginaActual"]);
+    dic.Add("cantidadPaginas", Model.Count() > 0 ? ((Model.First().CantRegistros > 0) ? ((Model.First().CantRegistros - 1) / (int)ViewData["Filas"]) + 1 : 1) : 1);
+    dic.Add("onclick", "Search");
+}
+@Html.Action("SelectorPaginas", "Paginador", dic)
+
